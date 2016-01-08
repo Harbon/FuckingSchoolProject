@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:hint="请输入用户名"
+        android:id="@+id/userNameEditText"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:hint="请输入密码"
+        android:inputType="textPassword"
+        android:id="@+id/userPasswordEditText"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:hint="请再次输入密码"
+        android:inputType="textPassword"
+        android:id="@+id/userRePasswordEditText"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:hint="请输入邮箱"
+        android:inputType="textEmailAddress"
+        android:id="@+id/userEmailEditText"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:id="@+id/notification"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/login_selector"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:id="@+id/registerButton"
+        android:text="注册"
+        />
+
+
+</LinearLayout>
