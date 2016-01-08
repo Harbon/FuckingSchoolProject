@@ -9,6 +9,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +28,19 @@ public class CartAdapter extends BaseAdapter {
     Context mContext;
 
     CartListener mCartListener;
+    DisplayImageOptions mOptions;
 
     public CartAdapter (Context context) {
         mCartProductions = new ArrayList<>();
         mContext = context;
+        mOptions = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.drawable.calendar) // resource or drawable
+                .showImageForEmptyUri(R.drawable.calendar) // resource or drawable
+                .showImageOnFail(R.drawable.calendar) // resource or drawable
+                .cacheInMemory(true) // default
+                .cacheOnDisk(true) // default
+                .displayer(new RoundedBitmapDisplayer(25))
+                .build();
     }
     public void addItem(Production production) {
         mCartProductions.add(production);
@@ -56,7 +70,8 @@ public class CartAdapter extends BaseAdapter {
         TextView scorePrice = (TextView) view.findViewById(R.id.productionScorePrice);
         TextView deleteButton = (TextView) view.findViewById(R.id.deleteProductionButton);
         final Production production = mCartProductions.get(position);
-        imageView.setImageDrawable(mContext.getResources().getDrawable(production.getPicture()));
+//        imageView.setImageDrawable(mContext.getResources().getDrawable(production.getPicture()));
+        ImageLoader.getInstance().displayImage(production.mIcon_url, imageView, mOptions);
         name.setText(production.getName());
         price.setText(production.getPrice()+"");
         scorePrice.setText(production.getScorePrice()+"");
@@ -65,12 +80,12 @@ public class CartAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 int position = (int) v.getTag();
+                Toast.makeText(mContext,"删除了商品："+mCartProductions.get(position).getName(), Toast.LENGTH_SHORT).show();
                 mCartProductions.remove(position);
-                CartAdapter.this.notifyDataSetChanged();
-                Snackbar.make(null, "删除了商品："+mCartProductions.get(position).getName(), Snackbar.LENGTH_SHORT);
                 if (mCartListener != null) {
                     mCartListener.deleteItem(position);
                 }
+                CartAdapter.this.notifyDataSetChanged();
             }
         });
         deleteButton.setTag(position);
@@ -82,5 +97,9 @@ public class CartAdapter extends BaseAdapter {
     }
     public void setCartListener(CartListener l) {
         this.mCartListener = l;
+    }
+
+    public void clear() {
+        mCartProductions.clear();
     }
 }

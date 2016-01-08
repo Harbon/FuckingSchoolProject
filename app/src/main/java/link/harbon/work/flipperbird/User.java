@@ -18,12 +18,20 @@ public class User implements Parcelable {
     String mName;
     String mAvatar;
     String mEmail;
-    float mScore;
+    int mScore;
     String mPassword;
+    String mUserId;
 
     public static User mCurrentUser;
 
 
+    public String getUserId() {
+        return mUserId;
+    }
+
+    public void setUserId(String userId) {
+        this.mUserId = userId;
+    }
 
     public User() {}
 
@@ -59,11 +67,11 @@ public class User implements Parcelable {
         this.mEmail = email;
     }
 
-    public float getScore() {
+    public int getScore() {
         return mScore;
     }
 
-    public void setScore(float score) {
+    public void setScore(int score) {
         this.mScore = score;
     }
 
@@ -75,23 +83,23 @@ public class User implements Parcelable {
         this.mPassword = password;
     }
 
-    public static User getUserByName(String name, Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("Users", Context.MODE_PRIVATE);
-        String userPropertiesString = sharedPreferences.getString(name, null);
-        if (userPropertiesString != null) {
-            User user = new User();
-            String[] properties = userPropertiesString.split(",");
-            user.setName(properties[0]);
-            user.setPassword(properties[1]);
-            user.setAvatar(properties[2]);
-            user.setEmail(properties[3]);
-            user.setMoney(Float.parseFloat(properties[4]));
-            user.setScore(Float.parseFloat(properties[5]));
-            return user;
-        }else {
-            return null;
-        }
-    }
+//    public static User getUserByName(String name, Context context) {
+//        SharedPreferences sharedPreferences = context.getSharedPreferences("Users", Context.MODE_PRIVATE);
+//        String userPropertiesString = sharedPreferences.getString(name, null);
+//        if (userPropertiesString != null) {
+//            User user = new User();
+//            String[] properties = userPropertiesString.split(",");
+//            user.setName(properties[0]);
+//            user.setPassword(properties[1]);
+//            user.setAvatar(properties[2]);
+//            user.setEmail(properties[3]);
+//            user.setMoney(Float.parseFloat(properties[4]));
+//            user.setScore(Float.parseFloat(properties[5]));
+//            return user;
+//        }else {
+//            return null;
+//        }
+//    }
     public void update(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("Users",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -99,6 +107,7 @@ public class User implements Parcelable {
         editor.putString(mName, propertiesString);
         editor.commit();
     }
+
 
     @Override
     public int describeContents() {
@@ -111,8 +120,9 @@ public class User implements Parcelable {
         dest.writeString(this.mName);
         dest.writeString(this.mAvatar);
         dest.writeString(this.mEmail);
-        dest.writeFloat(this.mScore);
+        dest.writeInt(this.mScore);
         dest.writeString(this.mPassword);
+        dest.writeString(this.mUserId);
     }
 
     protected User(Parcel in) {
@@ -120,11 +130,12 @@ public class User implements Parcelable {
         this.mName = in.readString();
         this.mAvatar = in.readString();
         this.mEmail = in.readString();
-        this.mScore = in.readFloat();
+        this.mScore = in.readInt();
         this.mPassword = in.readString();
+        this.mUserId = in.readString();
     }
 
-    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+    public static final Creator<User> CREATOR = new Creator<User>() {
         public User createFromParcel(Parcel source) {
             return new User(source);
         }
@@ -133,7 +144,4 @@ public class User implements Parcelable {
             return new User[size];
         }
     };
-
-
-
 }

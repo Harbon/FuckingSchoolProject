@@ -11,24 +11,61 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:orientation="vertical"
     android:gravity="bottom">
-
-   <de.hdodenhof.circleimageview.CircleImageView
-       android:layout_width="60dp"
-       android:layout_height="60dp"
-       android:layout_marginTop="16dp"
-       android:src="@drawable/ic_avtar"
-       app:civ_border_width="2dp"
-       android:id="@+id/user_avatar"
-       app:civ_border_color="#FFffff"/>
-
-
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text=""
-        android:id="@+id/user_name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_avtar"
+            app:civ_border_width="2dp"
+            android:id="@+id/user_avatar"
+            app:civ_border_color="#FFffff"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:text="余额："
+            android:textSize="20sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="20sp"
+            android:singleLine="true"
+            android:layout_height="wrap_content"
+            android:id="@+id/remainMoney"
+            android:text=""/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/nav_header_vertical_spacing"
+            android:text=""
+            android:id="@+id/user_name"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:text="积分："
+            android:textSize="20sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="20sp"
+            android:singleLine="true"
+            android:layout_height="wrap_content"
+            android:id="@+id/remainScore"
+            android:text=""/>
+    </LinearLayout>
+
 
     <TextView
         android:layout_width="wrap_content"

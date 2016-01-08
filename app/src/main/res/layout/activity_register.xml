@@ -36,6 +36,19 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:id="@+id/notification"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/progressBarRela"
+        android:visibility="gone"
+        android:gravity="center">
+        <ProgressBar
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            style="?android:attr/progressBarStyleSmall"
+            />
+    </RelativeLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"

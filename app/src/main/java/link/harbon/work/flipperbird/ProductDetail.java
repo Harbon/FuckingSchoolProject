@@ -7,9 +7,14 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 /**
  * Created by harbon on 16/1/3.
@@ -22,10 +27,18 @@ public class ProductDetail extends AppCompatActivity {
     TextView mProductionScoreTextView;
     TextView mProductionDescription;
     CollapsingToolbarLayout mCollapsingToolBarLayout;
+    DisplayImageOptions mOptions;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
+        mOptions = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.drawable.calendar) // resource or drawable
+                .showImageForEmptyUri(R.drawable.calendar) // resource or drawable
+                .showImageOnFail(R.drawable.calendar) // resource or drawable
+                .cacheInMemory(true) // default
+                .cacheOnDisk(true) // default
+                .build();
         Intent intent = getIntent();
         final Production production = intent.getParcelableExtra("production");
         mProductionImage = (ImageView) findViewById(R.id.productionImage);
@@ -34,9 +47,9 @@ public class ProductDetail extends AppCompatActivity {
         mProductionScoreTextView = (TextView) findViewById(R.id.productionScoreText);
         mProductionDescription = (TextView) findViewById(R.id.productionDescription);
         mCollapsingToolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        ImageLoader.getInstance().displayImage(production.mIcon_url, mProductionImage, mOptions);
         mCollapsingToolBarLayout.setTitle(production.getName());
         if (production != null) {
-            mProductionImage.setImageDrawable(getResources().getDrawable(production.getPicture()));
             mBuyButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

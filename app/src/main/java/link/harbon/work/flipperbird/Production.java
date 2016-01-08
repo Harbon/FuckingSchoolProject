@@ -11,14 +11,21 @@ public class Production implements Parcelable {
     float mPrice;
     float mScorePrice;
     int mPicture;
-
+    String mIcon_url;
     String mDescription;
+
 
     public Production(String name, float price, float scorePrice, int picture){
         this.mName = name;
         this.mPrice = price;
         this.mScorePrice = scorePrice;
         this.mPicture = picture;
+    }
+    public Production(String name, float price, float scorePrice, String icon_url){
+        this.mName = name;
+        this.mPrice = price;
+        this.mScorePrice = scorePrice;
+        this.mIcon_url = icon_url;
     }
 
     public String getName() {
@@ -42,6 +49,7 @@ public class Production implements Parcelable {
     public void setDescription(String description) {
         this.mDescription = description;
     }
+
     @Override
     public int describeContents() {
         return 0;
@@ -53,6 +61,7 @@ public class Production implements Parcelable {
         dest.writeFloat(this.mPrice);
         dest.writeFloat(this.mScorePrice);
         dest.writeInt(this.mPicture);
+        dest.writeString(this.mIcon_url);
         dest.writeString(this.mDescription);
     }
 
@@ -61,10 +70,11 @@ public class Production implements Parcelable {
         this.mPrice = in.readFloat();
         this.mScorePrice = in.readFloat();
         this.mPicture = in.readInt();
+        this.mIcon_url = in.readString();
         this.mDescription = in.readString();
     }
 
-    public static final Parcelable.Creator<Production> CREATOR = new Parcelable.Creator<Production>() {
+    public static final Creator<Production> CREATOR = new Creator<Production>() {
         public Production createFromParcel(Parcel source) {
             return new Production(source);
         }

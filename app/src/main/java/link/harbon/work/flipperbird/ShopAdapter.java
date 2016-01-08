@@ -1,6 +1,7 @@
 package link.harbon.work.flipperbird;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,8 @@ public class ShopAdapter extends BaseAdapter {
     private List<Production> mProductions;
 
     DisplayImageOptions mOptions;
+
+    private ShopListener mShopListener;
 
     public ShopAdapter(Context context) {
         this.mContext = context;
@@ -69,11 +72,33 @@ public class ShopAdapter extends BaseAdapter {
         TextView name = (TextView) view.findViewById(R.id.productionName);
         TextView price = (TextView) view.findViewById(R.id.productionPrice);
         TextView scorePrice = (TextView) view.findViewById(R.id.productionScorePrice);
+        TextView buttonAdd = (TextView) view.findViewById(R.id.buttonAddToCart);
+        buttonAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Production production = (Production) v.getTag();
+                if (mShopListener != null) {
+                    mShopListener.addToCart(production);
+                }
+            }
+        });
         Production production = mProductions.get(position);
-        imageView.setImageDrawable(mContext.getResources().getDrawable(production.getPicture()));
+        buttonAdd.setTag(production);
+        ImageLoader.getInstance().displayImage(production.mIcon_url, imageView, mOptions);
+
         name.setText(production.getName());
         price.setText("￥ " + production.getPrice()+"");
         scorePrice.setText("积分：" + production.getScorePrice()+"");
         return view;
+    }
+    public interface ShopListener {
+        public void addToCart(Production production);
+    }
+    public void setShopListener(ShopListener l) {
+        this.mShopListener = l;
+    }
+
+    public void clear() {
+        mProductions.clear();
     }
 }
